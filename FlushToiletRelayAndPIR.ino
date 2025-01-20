@@ -10,11 +10,10 @@ void setup() {
   Serial.begin(9600);
   pinMode(trig, INPUT);
   pinMode(relayPin, OUTPUT);
+  
   myservo.attach(servoPin);
-  myservo.write(180);   // Initial servo position (180 degrees)
+  myservo.write(180);   // Set servo to initial position
   delay(1000);
-  myservo.detach();
-  digitalWrite(relayPin, LOW);
 }
 
 void loop() {
@@ -23,15 +22,12 @@ void loop() {
   if (sensorVal == HIGH) {
     digitalWrite(relayPin, HIGH);
     Serial.println("Sensor active");
-    
-    myservo.attach(servoPin);
-    myservo.write(140); // Servo position 140 degrees
-    delay(2000);        // Wait for 2 seconds
 
-    myservo.write(180); // Servo position back to 180 degrees
-    delay(2000);        // Wait for 2 seconds
+    myservo.write(140);  // Move servo
+    delay(3000);         // Allow servo to move
 
-    myservo.detach();
+    myservo.write(180);  // Move servo back
+    delay(3000);
   } else {
     digitalWrite(relayPin, LOW);
   }
