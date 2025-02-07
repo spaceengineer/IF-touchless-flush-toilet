@@ -21,14 +21,29 @@ void loop() {
 
   if (sensorVal == HIGH) {
     digitalWrite(relayPin, HIGH);
-    Serial.println("Sensor active");
+    Serial.println("Sensor active - Moving servo");
 
-    myservo.write(140);  // Move servo
-    delay(3000);         // Allow servo to move
+    myservo.attach(servoPin); // Ensure servo is connected
+    delay(10);
 
-    myservo.write(180);  // Move servo back
-    delay(3000);
+    // Move servo to 140 degrees twice to ensure it moves
+    myservo.write(140);
+    delay(500);
+    myservo.write(140);
+    delay(500);
+
+    delay(2000); // Ensure enough time for movement
+
+    // Move back to 180 degrees twice to confirm position
+    myservo.write(180);
+    delay(500);
+    myservo.write(180);
+    delay(500);
+
+    delay(2000); // Allow servo to stabilize
+    myservo.detach(); // Free up the servo
   } else {
     digitalWrite(relayPin, LOW);
   }
 }
+
